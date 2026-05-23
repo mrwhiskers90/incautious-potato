@@ -17,7 +17,7 @@ export async function getTasks(): Promise<string[]> {
 
   if (!res.ok) throw new Error(`Todoist API ${res.status}`);
 
-  const today = new Date().toLocaleDateString("en-CA"); // YYYY-MM-DD in local time
+  const today = new Date().toLocaleDateString("en-CA", { timeZone: "America/New_York" }); // YYYY-MM-DD in local time
 
   const data: { results: { content: string; due: { date: string } | null }[] } = await res.json();
   return data.results

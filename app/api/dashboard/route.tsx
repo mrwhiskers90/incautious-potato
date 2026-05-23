@@ -27,24 +27,27 @@ function formatShortDate(dateStr: string): string {
 // Fix: use new Date() directly since event.start is a real ISO string
 function formatEventDate(isoStr: string): string {
   return new Date(isoStr).toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-  });
+  weekday: "short",
+  month: "short",
+  day: "numeric",
+  timeZone: "America/New_York",  // add this
+});
 }
 
 function formatEventTime(isoStr: string): string {
   return new Date(isoStr).toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  hour: "numeric",
+  minute: "2-digit",
+  timeZone: "America/New_York",  // add this
+});
 }
 
 function formatSunTime(dateStr: string): string {
   return new Date(dateStr).toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  hour: "numeric",
+  minute: "2-digit",
+  timeZone: "America/New_York",  // add this
+});
 }
 
 function activityImage(activity: string, request: Request): string {
@@ -301,11 +304,13 @@ export async function GET(request: Request) {
                 weekday: "long",
                 month: "short",
                 day: "numeric",
+                timeZone: "America/New York",
               })}
               {" • "}
               {now.toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "2-digit",
+                timeZone: "America/New York",
               })}
             </div>
           </div>
