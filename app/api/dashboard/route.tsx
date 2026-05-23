@@ -304,13 +304,13 @@ export async function GET(request: Request) {
                 weekday: "long",
                 month: "short",
                 day: "numeric",
-                timeZone: "America/New York",
+                timeZone: "America/New_York",
               })}
               {" • "}
               {now.toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "2-digit",
-                timeZone: "America/New York",
+                timeZone: "America/New_York",
               })}
             </div>
           </div>
