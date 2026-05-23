@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/api/dashboard/route.tsx": {
+      "maxDuration": 10
+    }
+  }
+}
