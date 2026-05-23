@@ -50,11 +50,11 @@ function formatEventTime(isoStr: string): string {
 }
 
 function formatSunTime(dateStr: string): string {
-  return new Date(dateStr).toLocaleTimeString("en-US", {
-  hour: "numeric",
-  minute: "2-digit",
-  timeZone: "America/New_York",  // add this
-});
+  const timePart = dateStr.split("T")[1];
+  const [h, m] = timePart.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const hour = h % 12 || 12;
+  return `${hour}:${m.toString().padStart(2, "0")} ${ampm}`;
 }
 
 function activityImage(activity: string): string {
