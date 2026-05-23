@@ -1,8 +1,8 @@
 import { WeatherData } from "./types";
 
 // PUT YOUR REAL COORDINATES HERE
-const LAT = 41.0330;
-const LON = -73.7629;
+const LAT = process.env.LATITUDE ?? "41.0330";
+const LON = process.env.LONGITUDE ?? "-73.7629";
 
 export async function getWeather(): Promise<WeatherData> {
   const url =

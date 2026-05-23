@@ -1,8 +1,7 @@
 import ical from "node-ical";
 import { CalendarEvent } from "./types";
 
-const CALENDAR_URL =
-  "https://calendar.google.com/calendar/ical/t63b2r91iu6qaad3p6dndusmto%40group.calendar.google.com/private-5fd1fcea1190ef5fc5666e6b702d4ea7/basic.ics";
+const CALENDAR_URL = process.env.CALENDAR_URL ?? "";
 
 function dateKey(d: Date): string {
   return d.toISOString().slice(0, 10);
