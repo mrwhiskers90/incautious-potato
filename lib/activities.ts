@@ -1,11 +1,11 @@
 export const weeklyActivities = {
-  sunday: "rest",
-  monday: "run",
-  tuesday: "climb",
+  sunday: "yoga",
+  monday: "climb",
+  tuesday: "run",
   wednesday: "yoga",
   thursday: "run",
   friday: "climb",
-  saturday: "hike",
+  saturday: "rest",
 };
 
 // options are "run", "climb", "yoga", "hike", "rest", and "other"
