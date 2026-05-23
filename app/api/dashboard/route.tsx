@@ -4,6 +4,8 @@ import { getCalendarEvents } from "@/lib/calendar";
 import { getTasks } from "@/lib/tasks";
 import { WeatherDay, CalendarEvent } from "@/lib/types";
 import { getTodaysActivity } from "@/lib/activities";
+import fs from "fs";
+import path from "path";
 
 export const runtime = "nodejs";
 
@@ -15,6 +17,11 @@ const FONT = "system-ui, sans-serif";
 function parseLocalDate(dateStr: string): Date {
   const [y, m, d] = dateStr.split("-").map(Number);
   return new Date(y, m - 1, d);
+}
+
+function loadImage(publicPath: string): string {
+  const data = fs.readFileSync(path.join(process.cwd(), "public", publicPath));
+  return `data:image/png;base64,${data.toString("base64")}`;
 }
 
 function formatShortDate(dateStr: string): string {
@@ -50,28 +57,26 @@ function formatSunTime(dateStr: string): string {
 });
 }
 
-function activityImage(activity: string, request: Request): string {
-  const baseUrl = new URL(request.url).origin;
+function activityImage(activity: string): string {
   switch (activity) {
-    case "run":    return `${baseUrl}/icons/run.png`;
-    case "climb":  return `${baseUrl}/icons/climb.png`;
-    case "yoga":   return `${baseUrl}/icons/yoga.png`;
-    case "rest":   return `${baseUrl}/icons/rest.png`;
-    case "hike":   return `${baseUrl}/icons/hike.png`;
-    default:       return `${baseUrl}/icons/other.png`;
+    case "run":    return loadImage("icons/run.png");
+    case "climb":  return loadImage("icons/climb.png");
+    case "yoga":   return loadImage("icons/yoga.png");
+    case "rest":   return loadImage("icons/rest.png");
+    case "hike":   return loadImage("icons/hike.png");
+    default:       return loadImage("icons/other.png");
   }
 }
 
-function weatherIcon(code: number, request: Request): string {
-  const baseUrl = new URL(request.url).origin;
-  if (code === 0)                                              return `${baseUrl}/weather/sun.png`;
-  if ([1].includes(code))                                      return `${baseUrl}/weather/partly-cloudy.png`;
-  if ([2, 3].includes(code))                                   return `${baseUrl}/weather/cloud.png`;
-  if ([45, 48].includes(code))                                 return `${baseUrl}/weather/fog.png`;
-  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code))    return `${baseUrl}/weather/rain.png`;
-  if ([71, 73, 75, 77, 85, 86].includes(code))                 return `${baseUrl}/weather/snow.png`;
-  if ([95, 96, 99].includes(code))                             return `${baseUrl}/weather/storm.png`;
-  return `${baseUrl}/weather/cloud.png`;
+function weatherIcon(code: number): string {
+  if (code === 0)                                              return loadImage("weather/sun.png");
+  if ([1].includes(code))                                      return loadImage("weather/partly-cloudy.png");
+  if ([2, 3].includes(code))                                   return loadImage("weather/cloud.png");
+  if ([45, 48].includes(code))                                 return loadImage("weather/fog.png");
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code))    return loadImage("weather/rain.png");
+  if ([71, 73, 75, 77, 85, 86].includes(code))                 return loadImage("weather/snow.png");
+  if ([95, 96, 99].includes(code))                             return loadImage("weather/storm.png");
+  return loadImage("weather/cloud.png");
 }
 
 function Panel({
@@ -163,7 +168,7 @@ export async function GET(request: Request) {
                   </div>
 
                   <img
-                    src={weatherIcon(day.weathercode, request)}
+                    src={weatherIcon(day.weathercode)}
                     width="96"
                     height="96"
                     alt="weather"
@@ -250,7 +255,7 @@ export async function GET(request: Request) {
               }}
             >
               <img
-                src={activityImage(activity, request)}
+                src={activityImage(activity)}
                 width="148"
                 height="276"
                 alt={activity}
@@ -268,7 +273,7 @@ export async function GET(request: Request) {
               >
                 {tasks.length === 0 ? (
                   <img
-                    src={`${new URL(request.url).origin}/tasks/no_tasks.png`}
+                    src={loadImage("tasks/no_tasks.png")}
                     width="226"
                     height="276"
                     alt="No tasks today"
