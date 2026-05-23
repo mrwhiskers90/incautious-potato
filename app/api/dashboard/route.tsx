@@ -282,7 +282,7 @@ export async function GET(request: Request) {
             </Panel>
           </div>
 
-          {/* FOOTER */}
+{/* FOOTER */}
           <div
             style={{
               height: "32px",
@@ -300,18 +300,18 @@ export async function GET(request: Request) {
             </div>
             <div style={{ display: "flex" }}>
               Latest as of{" "}
-              {now.toLocaleDateString("en-US", {
+              {new Intl.DateTimeFormat("en-US", {
                 weekday: "long",
                 month: "short",
                 day: "numeric",
                 timeZone: "America/New_York",
-              })}
+              }).format(now)}
               {" • "}
-              {now.toLocaleTimeString("en-US", {
+              {new Intl.DateTimeFormat("en-US", {
                 hour: "numeric",
                 minute: "2-digit",
                 timeZone: "America/New_York",
-              })}
+              }).format(now)}
             </div>
           </div>
         </div>
